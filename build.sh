@@ -13,13 +13,13 @@ get_script_dir() {
 
 set -euo pipefail
 
-cd $(get_script_dir)
+cd "$(get_script_dir)"
 
 $OPENSCAD_EXE -v
 
 set +e
 # known spurious warning: https://github.com/openscad/openscad/issues/2888
-$OPENSCAD_EXE -o $FILESTEM.stl $FILESTEM.scad 2>&1 | grep -v 'Fontconfig warning'
+$OPENSCAD_EXE --export-format binstl -o $FILESTEM.stl $FILESTEM.scad 2>&1 | grep -v 'Fontconfig warning'
 RESULT=$?
 
 if [[ "$RESULT" == "0" ]]; then
